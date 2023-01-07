@@ -75,5 +75,25 @@ class ModelTrainerConfig:
 
         except Exception as e:
             raise SensorException(e, sys) 
-class ModelEvaluationConfig:...
-class ModelPusherConfig:...
+
+class ModelEvaluationConfig:
+    
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        try:
+            self.change_threshold = 0.01
+
+        except Exception as e:
+            raise SensorException(e, sys) 
+
+class ModelPusherConfig:
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        try:
+            self.model_pusher_dir = os.path.join(training_pipeline_config.artifact_dir,"model_pusher")
+            self.outside_saved_model_dir = os.path.join("saved_models")
+            self.pusher_model_dir = os.path.join(self.model_pusher_dir,"saved_models")
+            self.pusher_model_path = os.path.join(self.model_pusher_dir,model_file_name)
+            self.pusher_transformer_path = os.path.join(self.model_pusher_dir,transformer_object_file_name)
+            self.pusher_target_encoder_path = os.path.join(self.model_pusher_dir,target_encoder_object_file_name)
+
+        except Exception as e:
+            raise SensorException(e, sys)
